@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[
+<!-- START ${1:$TM_FILENAME} WITH ${2:$TM_FILENAME.css},${3:$TM_FILENAME.js} -->
+${4:$SELECTION}
+<!-- END ${1:$TM_FILENAME} -->
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>expw</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html.handlebars</scope>
+</snippet>

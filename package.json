@@ -1,0 +1,48 @@
+{
+  "name": "grunt-assemble-handlebars-module-exporter",
+  "description": "A grunt plugin that extracts modules from html markup based on regular expressions",
+  "version": "0.1.0",
+  "homepage": "https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter",
+  "author": {
+    "name": "Wehe, Tino",
+    "email": "tino.wehe@brandrockers.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://gitlab.brandrockers.com/aperto/grunt-assemble-handlebars-module-exporter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-jscs": "^2.8.0",
+    "jit-grunt": "^0.10.0",
+    "load-grunt-configs": "^0.4.3",
+    "time-grunt": "^1.3.0"
+  },
+  "keywords": [
+    "gruntplugin",
+    "assemble",
+    "handlebars",
+    "export"
+  ],
+  "dependencies": {
+    "findup-sync": "^0.3.0",
+    "html": "0.0.10",
+    "html-minifier": "^1.2.0",
+    "lodash": "^4.5.1"
+  }
+}

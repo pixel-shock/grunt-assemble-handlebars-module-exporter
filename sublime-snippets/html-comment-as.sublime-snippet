@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[
+<!-- START ${1:$TM_FILENAME} AS ${2:$TM_FILENAME} -->
+${3:$SELECTION}
+<!-- END ${1:$TM_FILENAME} -->
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>expa</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html.handlebars</scope>
+</snippet>
