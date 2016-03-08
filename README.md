@@ -7,8 +7,15 @@ This plugin requires Grunt `~0.4.5`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
+In Future:
 ```shell
 npm install grunt-assemble-handlebars-module-exporter --save-dev
+```
+
+Currently:
+Add the follwing line to your ```package.json```
+```json
+"grunt-assemble-handlebars-module-exporter": "git+https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter.git#v0.1.0"
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -17,18 +24,18 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-assemble-handlebars-module-exporter');
 ```
 
-## The "assemble_handlebars_module_exporter" task
+## The "assemble-handlebars-module-exporter" task
 
 ### Overview
-In your project's Gruntfile, add a section named `assemble_handlebars_module_exporter` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `assemble-handlebars-module-exporter` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-	assemble_handlebars_module_exporter: {
+	'assemble-handlebars-module-exporter': {
 			// Target-specific file lists and/or options go here.
-			your_target: {
+			'your_target': {
 				// Setting up your options
-				options: {
+				'options': {
 					// Take a look into the "defaults.js" file within the package
 				}
 			}
@@ -58,6 +65,19 @@ A RegEx which is used to find the modules within the HTML code.
 
 An Array which defines the replacements in the "start" regex to build the "end" regex.
 
+#### Example
+
+```html
+<!-- START b-branding.hbs WITH b-branding.css -->
+```
+
+will be converted to
+
+```html
+<!-- END b-branding.hbs -->
+```
+
+
 #### options.moduleSrc
 **Type:** `String`<br>
 **Default value:** `resources/templates/`
@@ -71,7 +91,7 @@ A String which defines the source directory for the modules (`.hbs` files for ex
 A String which defines the export extension of the modules.
 
 #### options.dependingFilesBasePath
-**Type: **`String`<br>
+**Type:** `String`<br>
 **Default value:** `_output`
 
 A String which defines the output directory of assemble. The Task searches the depending files in this directory.

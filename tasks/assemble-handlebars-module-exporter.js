@@ -41,7 +41,7 @@ module.exports = function( grunt ) {
 	/**
 	 * Register a new MultiTask
 	 */
-	grunt.registerMultiTask( 'assemble_handlebars_module_exporter', 'A grunt plugin that extracts modules from html markup based on regular expressions', function() { // jscs:ignore maximumLineLength
+	grunt.registerMultiTask( 'assemble-handlebars-module-exporter', 'A grunt plugin that extracts modules from html markup based on regular expressions', function() { // jscs:ignore maximumLineLength
 		/**
 		 * Pseudo "cache" for found module source files
 		 * @type {Object}

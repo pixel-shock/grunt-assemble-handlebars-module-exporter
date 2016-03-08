@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://gitlab.brandrockers.com/aperto/grunt-assemble-handlebars-module-exporter.git"
+    "url": "git+https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter.git"
   },
   "bugs": {
     "url": "https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter/issues"
