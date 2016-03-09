@@ -115,21 +115,25 @@ An Array which defines the directories within the `dependingFilesBasePath` which
 **Default value:**
 
 ```
-{
-	options: {
-		include: 'byFiletype'	// 'always' or 'byFiletype'
-	},
-	files: [
-		'euh-config.js',
-		'euh-jquery-extend.js',
-		'jquery.js',
-		'modernizr.js',
-		'base-styles.css',
-		'vendor.css'
+files: {
+	'always': [
+		'_output/fonts/**/*.*'
+	],
+	'byFileType': [
+		'_output/js/config.js',
+		'_output/js/app/jquery-extend.js',
+		'_output/js/lib/jquery.js',
+		'_output/js/lib/modernizr.js',
+		'_output/css/base-styles.css',
+		'_output/css/vendor.css'
 	]
 }
 ```
 An Object which defines the base dependencies for each module.
+
+`always` means that these files are always copied to the output folder of the module.
+
+`byFileType` means that these files are copied if the file extensions dependencies in the module matching the base dependency.
 
 ### Comments in your modules
 
@@ -163,7 +167,6 @@ Take a look in the repository. I've included some sublime snippet files. Feel fr
 
 
 #### with `WITH` option
-```html
 <!-- START b-footer.hbs WITH footer.css,footer.js,footer-logo.png -->
 <div id="site-info" class="b-footer">
 	<ul>

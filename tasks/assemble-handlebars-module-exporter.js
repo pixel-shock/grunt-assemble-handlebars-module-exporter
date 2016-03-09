@@ -19,6 +19,7 @@ module.exports = function( grunt ) {
 	var inspect		= require( 'util' ).inspect;
 	var findup		= require( 'findup-sync' );
 	var path		= require( 'path' );
+	var glob		= require( 'glob' );
 
 	/**
 	 * Task specific includes
@@ -112,7 +113,8 @@ module.exports = function( grunt ) {
 							content: html.prettyPrint( foundModules[ i ] ),
 							fileName: value.fileName,
 							exportAlias: value.exportAlias,
-							dependingFiles: value.dependingFiles || []
+							dependingFiles: value.dependingFiles || [],
+							baseDependencies: []
 						} );
 					}
 				} );
@@ -178,34 +180,63 @@ module.exports = function( grunt ) {
 					if ( grunt.file.isFile( filePath ) == false ) {
 						// write the module content to a file
 						grunt.file.write( filePathWithName, module.content );
-						// always include ALL base dependencies
-						if ( options.baseDependencies.options.include === 'always' ) {
-							module.dependingFiles = _.concat( options.baseDependencies.files,
-																module.dependingFiles );
+						// Save the current CWD
+						var currentCwd = process.cwd();
+						// Switch back to the base CWD
+						grunt.file.setBase( oldCwd );
+						// Iterate through the base dependencies which should be "always" included
+						for ( var i = 0; i < options.baseDependencies.files.always.length; i++ ) { // jscs:ignore maximumLineLength
+							var patt = options.baseDependencies.files.always[ i ];
+							var files = glob.sync( patt, {
+								realpath: true
+							} );
+
+							if ( files.length > 0 ) {
+								files.forEach( function( file ) {
+									module.baseDependencies.push( file );
+								} );
+							}
 						}
-						// Only include base dependencies based on it's extension.
-						// For example: If a module has dependencies with CSS files only, this task
-						// only will include base dependencies with CSS file extension.
-						if ( options.baseDependencies.options.include === 'byFiletype' ) {
-							_.each( options.baseDependencies.files, function( baseDepFileName ) {
-								var baseExt = path.extname( baseDepFileName );
+						// Iterate throught the base dependencies which sould be included "byFileType"
+						for ( var i = 0; i < options.baseDependencies.files.byFileType.length; i++ ) { // jscs:ignore maximumLineLength
+							var patt = options.baseDependencies.files.byFileType[ i ];
+							var files = glob.sync( patt, {
+								realpath: true
+							} );
 
-								_.each( module.dependingFiles, function( depFileName ) {
-									var depExt = path.extname( depFileName );
+							if ( files.length > 0 ) {
+								files.forEach( function( file ) {
+									var fileExt = path.extname( file );
+									// Check if a depending file extension matches the extension of
+									// the base dependency
+									for ( var j = 0; j < module.dependingFiles.length; j++ ) {
+										var depFileExt = path.extname( module.dependingFiles[ j ] );
 
-									if ( baseExt === depExt ) {
-										module.dependingFiles.push( baseDepFileName );
+										if ( fileExt === depFileExt ) {
+											module.baseDependencies.push( file );
+										}
 									}
 								} );
-							} );
+							}
 						}
+						// Switch back to the previous CWD
+						grunt.file.setBase( currentCwd );
 						// avoid duplicating files
 						module.dependingFiles = _.uniq( module.dependingFiles );
-						// search and copy depending files & base dependencies
+						module.baseDependencies = _.uniq( module.baseDependencies );
+						// Search and copy depending files
 						if ( module.dependingFiles.length > 0 ) {
 							Helper.findAndCopyDependingFiles( module.dependingFiles,
 																filePath,
-																options );
+																options,
+																false );
+						}
+						// Copy base dependencies
+						if ( module.baseDependencies.length > 0 ) {
+							Helper.findAndCopyDependingFiles( module.baseDependencies,
+																filePath,
+																options,
+																true );
 						}
 					}
 				} );

@@ -39,7 +39,7 @@ exports.init = function( grunt ) {
 	 * @param  {String} destination The path for the output ( targetPath for the copied files )
 	 * @param {Object} options The task options
 	 */
-	exports.findAndCopyDependingFiles = function( fileNames, destination, options ) {
+	exports.findAndCopyDependingFiles = function( fileNames, destination, options, isBaseDependency ) { // jscs:ignore maximumLineLength
 		for ( var i = 0; i < fileNames.length; i++ ) {
 			var depFile = fileNames[ i ];
 			var depFileFound = false;
@@ -49,13 +49,19 @@ exports.init = function( grunt ) {
 				var srcPath = options.dependingFilesBasePath + path.sep + srcPaths[ j ];
 				var filePath = null;
 
-				if ( typeof foundFilesCache[ depFile ] !== 'undefined' ) {
-					filePath = foundFilesCache[ depFile ];
+				// If the fileNames are for base dependencies, we're knowing the complete filepath
+				// already
+				if ( isBaseDependency !== true ) {
+					if ( typeof foundFilesCache[ depFile ] !== 'undefined' ) {
+						filePath = foundFilesCache[ depFile ];
+					} else {
+						filePath = findup( srcPath + path.sep + '**' + path.sep + depFile, {
+							nocase: true,
+							dot: false
+						} );
+					}
 				} else {
-					filePath = findup( srcPath + path.sep + '**' + path.sep + depFile, {
-						nocase: true,
-						dot: false
-					} );
+					filePath = depFile;
 				}
 
 				if ( filePath !== null ) {

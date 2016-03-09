@@ -20,17 +20,10 @@ exports.init = function( grunt ) {
 			'img'
 		],
 		baseDependencies: {
-			options: {
-				include: 'byFiletype'	// 'always' or 'byFiletype'
-			},
-			files: [
-				'euh-config.js',
-				'euh-jquery-extend.js',
-				'jquery.js',
-				'modernizr.js',
-				'base-styles.css',
-				'vendor.css'
-			]
+			files: {
+				'always': [],
+				'byFileType': []
+			}
 		}
 	};
 
