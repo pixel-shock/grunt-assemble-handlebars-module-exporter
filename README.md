@@ -167,6 +167,7 @@ Take a look in the repository. I've included some sublime snippet files. Feel fr
 
 
 #### with `WITH` option
+```html
 <!-- START b-footer.hbs WITH footer.css,footer.js,footer-logo.png -->
 <div id="site-info" class="b-footer">
 	<ul>
