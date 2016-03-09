@@ -54,14 +54,15 @@ module.exports = function( grunt ) {
 		options = _.defaultsDeep( this.options(), defaults );
 		// Iterate over all specified file groups.
 		this.files.forEach( function( task ) {
-			grunt.log.writeln( 'Processing ' + task.src.length + ' file(s) ...' );
+			var foundFilesLen = task.src.length;
+			grunt.log.writeln( 'Processing ' + foundFilesLen + ' file(s) ...' );
 			// Delete the old dist directoy of exists
 			if ( grunt.file.isDir( task.dist ) === true ) {
 				grunt.file.delete( task.dist );
 			}
 			// Iterate through all src files
-			task.src.forEach( function( file ) {
-				grunt.log.writeln( 'Processing ' + file.cyan );
+			task.src.forEach( function( file, index ) {
+				grunt.log.writeln( '\t' + file.yellow );
 				/**
 				 * The file content of the src file
 				 * @type {String}
@@ -89,6 +90,9 @@ module.exports = function( grunt ) {
 				var regexs = Helper.buildRegexs( minifiedContent,
 													options.moduleStartRegex,
 													options.moduleEndSubstitutions );
+
+				// Remove doublicates by the "startComment" property
+				regexs = _.uniqBy( regexs, 'startComment' );
 				// Iterate through all regex and try to find the module markers
 				regexs.forEach( function( value ) {
 					/**
@@ -118,6 +122,13 @@ module.exports = function( grunt ) {
 						} );
 					}
 				} );
+
+				if ( modules.length === 0 ) {
+					grunt.log.writeln( '\t\t0 modules found!'.yellow );
+				} else {
+					grunt.log.writeln( '\t\t' + modules.length + ' modules found'.green );
+				}
+
 				// Switch back to the original working directory to search for
 				// the module files
 				grunt.file.setBase( oldCwd );
@@ -192,8 +203,8 @@ module.exports = function( grunt ) {
 							} );
 
 							if ( files.length > 0 ) {
-								files.forEach( function( file ) {
-									module.baseDependencies.push( file );
+								files.forEach( function( baseDepFile ) {
+									module.baseDependencies.push( baseDepFile );
 								} );
 							}
 						}
@@ -205,15 +216,15 @@ module.exports = function( grunt ) {
 							} );
 
 							if ( files.length > 0 ) {
-								files.forEach( function( file ) {
-									var fileExt = path.extname( file );
+								files.forEach( function( baseDepFile ) {
+									var fileExt = path.extname( baseDepFile );
 									// Check if a depending file extension matches the extension of
 									// the base dependency
 									for ( var j = 0; j < module.dependingFiles.length; j++ ) {
 										var depFileExt = path.extname( module.dependingFiles[ j ] );
 
 										if ( fileExt === depFileExt ) {
-											module.baseDependencies.push( file );
+											module.baseDependencies.push( baseDepFile );
 										}
 									}
 								} );

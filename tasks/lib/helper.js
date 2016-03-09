@@ -6,6 +6,16 @@ exports.init = function( grunt ) {
 	var exports = {};
 
 	/**
+	 * A helper function for zerofill
+	 * @param  {Integer} num   The number to be filled
+	 * @param  {Integer} count The fill count
+	 * @return {String}       The filled number
+	 */
+	exports.zeroFill = function( num, count ) {
+		return [ Math.pow( 10, count - num.toString().length ), num ].join( '' ).substr( 1 );
+	};
+
+	/**
 	 * Find a module with a html string
 	 * @param  {String} html  The html-haystack for the search
 	 * @param  {String} regex The regex

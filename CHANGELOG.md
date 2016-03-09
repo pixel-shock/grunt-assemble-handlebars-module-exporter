@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.2.1 - 2016-03-09
+* improved performance ... removed duplicates of found regex
+
 ## v0.2.0 - 2016-03-09
 * **+/-** switched to `glob` to include the `baseDependencies` instead of search through the whole project
 	* **Please take a look at the changed defaults!**
