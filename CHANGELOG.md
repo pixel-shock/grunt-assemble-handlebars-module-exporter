@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.2.5 - 2016-03-10
+* **added** `grunt-tasks` & `Gruntfile.js` to `.npmignore`
+
 ## v0.2.4 - 2016-03-10
 * **added** `.npmignore` file to exclude the unnecessary stuff
 
