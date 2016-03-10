@@ -2,6 +2,10 @@
 
 > A grunt plugin that extracts modules from html markup based on regular expressions
 
+<br>
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+
+
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
 

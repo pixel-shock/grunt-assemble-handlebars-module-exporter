@@ -128,10 +128,6 @@ module.exports = function( grunt ) {
 				} else {
 					grunt.log.writeln( '\t\t' + modules.length + ' modules found'.green );
 				}
-
-				// Switch back to the original working directory to search for
-				// the module files
-				grunt.file.setBase( oldCwd );
 				// Try to find the source module files
 				modules.forEach( function( module, key ) {
 					/**
@@ -165,22 +161,19 @@ module.exports = function( grunt ) {
 						delete modules[ key ];
 					}
 				} );
-				// Change CWD to the dist directory
-				grunt.file.setBase( oldCwd );
 				// If the dist directory don't exist, create it
 				if ( grunt.file.isDir( task.dist ) === false ) {
 					grunt.file.mkdir( task.dist );
 				}
-				// Set the current working directory to the dist directory
-				grunt.file.setBase( task.dist );
 				// Iterate through all modules, write them into the output
 				// file and try to find the depending files
 				modules.forEach( function( module ) {
-					var extractPath = path.normalize( '.' + module.filePath );
+					var extractPath = path.normalize( task.dist + '/' + module.filePath );
 					var exportFileName = path.basename( module.exportAlias,
 														path.extname( module.exportAlias ) );
 					var filePath = extractPath + exportFileName + path.sep;
 					var filePathWithName = path.normalize( filePath +
+															'/' +
 															exportFileName +
 															options.moduleExportExtension );
 					// Check if the path exists, if not create it
@@ -191,10 +184,6 @@ module.exports = function( grunt ) {
 					if ( grunt.file.isFile( filePath ) == false ) {
 						// write the module content to a file
 						grunt.file.write( filePathWithName, module.content );
-						// Save the current CWD
-						var currentCwd = process.cwd();
-						// Switch back to the base CWD
-						grunt.file.setBase( oldCwd );
 						// Iterate through the base dependencies which should be "always" included
 						for ( var i = 0; i < options.baseDependencies.files.always.length; i++ ) { // jscs:ignore maximumLineLength
 							var patt = options.baseDependencies.files.always[ i ];
@@ -230,8 +219,6 @@ module.exports = function( grunt ) {
 								} );
 							}
 						}
-						// Switch back to the previous CWD
-						grunt.file.setBase( currentCwd );
 						// avoid duplicating files
 						module.dependingFiles = _.uniq( module.dependingFiles );
 						module.baseDependencies = _.uniq( module.baseDependencies );
@@ -251,11 +238,7 @@ module.exports = function( grunt ) {
 						}
 					}
 				} );
-				// Switch back to the original working directory
-				grunt.file.setBase( oldCwd );
 			} );
-
-			grunt.file.setBase( oldCwd );
 		} );
 	} );
 

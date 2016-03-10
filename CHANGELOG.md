@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.2.2 - 2016-03-10
+* removed `grunt.file.setBase` statements due to grunt plugin guidelines
+
 ## v0.2.1 - 2016-03-09
 * improved performance ... removed duplicates of found regex
 
