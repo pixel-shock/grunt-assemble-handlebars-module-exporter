@@ -4,6 +4,7 @@
 
 <br>
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![Build Status](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter.svg?branch=master)](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter)
 
 
 ## Getting Started

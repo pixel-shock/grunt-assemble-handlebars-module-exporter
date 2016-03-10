@@ -5,6 +5,7 @@
 * **added** [veams](http://www.veams.org/) as test-base
 * **fixed** path resolve issues for depending files
 * **removed** deletion of the export directory ... please use `grunt-contrib-clean` or an other tool to clean that directory
+* **added** travis-ci for tests
 
 ## v0.2.2 - 2016-03-10
 * **removed** `grunt.file.setBase` statements due to grunt plugin guidelines
