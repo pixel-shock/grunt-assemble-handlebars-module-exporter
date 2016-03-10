@@ -56,10 +56,6 @@ module.exports = function( grunt ) {
 		this.files.forEach( function( task ) {
 			var foundFilesLen = task.src.length;
 			grunt.log.writeln( 'Processing ' + foundFilesLen + ' file(s) ...' );
-			// Delete the old dist directoy of exists
-			if ( grunt.file.isDir( task.dist ) === true ) {
-				grunt.file.delete( task.dist );
-			}
 			// Iterate through all src files
 			task.src.forEach( function( file, index ) {
 				grunt.log.writeln( '\t' + file.yellow );
@@ -140,11 +136,11 @@ module.exports = function( grunt ) {
 						filePath = moduleSrcFileCache[ module.fileName ];
 					// Otherwise try to find the module source file
 					} else {
-						filePath = findup( options.moduleSrc +
-											path.sep + '**' + path.sep +
-											module.fileName, {
+						var searchPath = path.normalize( options.moduleSrc + path.sep );
+						filePath = findup( '**' + path.sep + module.fileName, {
 							nocase: true,
-							dot: false
+							dot: false,
+							cwd: searchPath
 						} );
 					}
 					// If a module source file found, store it into the pseudo
@@ -165,6 +161,7 @@ module.exports = function( grunt ) {
 				if ( grunt.file.isDir( task.dist ) === false ) {
 					grunt.file.mkdir( task.dist );
 				}
+
 				// Iterate through all modules, write them into the output
 				// file and try to find the depending files
 				modules.forEach( function( module ) {

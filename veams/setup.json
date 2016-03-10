@@ -1,0 +1,25 @@
+{
+  "generator-veams": {
+    "projectName": "",
+    "projectAuthor": "",
+    "taskRunner": [
+      "grunt"
+    ],
+    "templateEngine": "assemble",
+    "installExtendedLayout": true,
+    "installPlugin": false,
+    "gulpModules": [],
+    "gruntModules": [
+      "grunt-combine-mq",
+      "grunt-dr-svg-sprites"
+    ],
+    "features": [],
+    "jsLibs": [],
+    "cssLibs": [],
+    "testAndQA": false,
+    "testAndQALibs": [],
+    "veamsPackages": [],
+    "docs": [],
+    "defaultInstall": "minInstall"
+  }
+}

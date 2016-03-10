@@ -18,6 +18,13 @@ module.exports = function(grunt) {
 	var configs = require('load-grunt-configs')(grunt, config.options);
 	grunt.initConfig(configs);
 
+	grunt.registerTask( 'test', [
+		'jscs:exporter',
+		'grunt:veams-build',
+		'grunt:veams-export',
+		'nodeunit:veams-export'
+	] );
+
 	grunt.registerTask( 'default', [
 		'jscs:exporter'
 	] );

@@ -6,7 +6,7 @@ module.exports = function(grunt, options) {
 				'config': 'grunt-tasks/configs/jscs.json',
 				'esnext': false,
 				'verbose': true,
-				'fix': true,
+				'fix': false,
 				'maxErrors': 500
 			}
 		}

@@ -54,10 +54,15 @@ exports.init = function( grunt ) {
 			var depFile = fileNames[ i ];
 			var depFileFound = false;
 			var srcPaths = options.dependingFilesSrc;
-
+			// This is useful ... when this task takes too much time, mostly
+			// the depending file doesn't exist or spelled wrong.
+			// Run in verbose mode to see the file which should be found.
+			grunt.verbose.writeln( '\tSearching for: ' + depFile );
+			// Search in every srcPath for the depending files
 			for ( var j = 0; j < srcPaths.length; j++ ) {
 				var srcPath = options.dependingFilesBasePath + path.sep + srcPaths[ j ];
 				var filePath = null;
+				var searchPath = '';
 
 				// If the fileNames are for base dependencies, we're knowing the complete filepath
 				// already
@@ -65,9 +70,11 @@ exports.init = function( grunt ) {
 					if ( typeof foundFilesCache[ depFile ] !== 'undefined' ) {
 						filePath = foundFilesCache[ depFile ];
 					} else {
-						filePath = findup( srcPath + path.sep + '**' + path.sep + depFile, {
+						searchPath = path.normalize( srcPath + path.sep );
+						filePath = findup( '**' + path.sep + depFile, {
 							nocase: true,
-							dot: false
+							dot: false,
+							cwd: searchPath
 						} );
 					}
 				} else {
@@ -77,26 +84,19 @@ exports.init = function( grunt ) {
 				if ( filePath !== null ) {
 					depFileFound = true;
 					foundFilesCache[ depFile ] = filePath;
-
-					var exportPathTmp = filePath.split( options.dependingFilesBasePath );
-					var exportPath = destination + path.basename( filePath );
-
-					if ( exportPathTmp.length === 2 ) {
-						var parentPath = exportPathTmp[ 1 ].split( path.sep );
-						parentPath.pop();
-						exportPath = destination +
-										parentPath.join( path.sep ) +
-										path.sep +
-										path.basename( filePath );
-					}
-
+					// Build a path which exludes all paths parents
+					// starting at the dependingFilesBasePath
+					var relDepFilePath = path.relative( options.dependingFilesBasePath, filePath );
+					var exportPath = path.normalize( destination + path.sep + relDepFilePath );
 					grunt.file.copy( filePath, exportPath );
 				}
 			}
 
 			if ( depFileFound === false ) {
-				grunt.log.write( '\n\tCould not find depending file: '.red );
-				grunt.log.writeln( depFile.yellow );
+				grunt.log.writeln(
+					( '\n\t\tCould not find depending file: ' ).red  +
+					( '"' + depFile + '"\n' ).cyan
+				);
 			}
 		}
 	};

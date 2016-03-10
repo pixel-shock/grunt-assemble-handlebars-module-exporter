@@ -8,6 +8,7 @@ config.options = {
 		src: 'grunt-tasks/tasks/*.js'
 	},
 	paths: {
-		js: 'tasks'
+		js: 'tasks',
+		tests: 'tests'
 	}
 };
