@@ -25,6 +25,7 @@
     "npm": ">=2.5.1"
   },
   "scripts": {
+    "pretest": "npm install && cd ./veams && npm install && cd ..",
     "test": "grunt test"
   },
   "devDependencies": {

@@ -10,39 +10,64 @@ exports.directoryStructure = {
 		this.headerScriptsDirectory = this.exportDirectory + path.sep + 'header-scripts';
 		callback();
 	},
+
 	metadataDirIncludesJQuery: function( test ) {
 		var jQuery = glob.sync( this.metadataDirectory + path.sep + '**' + path.sep + 'jquery.js' );
 		test.notStrictEqual( jQuery.length, 0 );
 		test.done();
 	},
+
 	stylesDirIncludesJQuery: function( test ) {
 		var jQuery = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + 'jquery.js' );
 		test.notStrictEqual( jQuery.length, 0 );
 		test.done();
 	},
+
 	headerScriptsDirIncludesJQuery: function( test ) {
 		var jQuery = glob.sync( this.headerScriptsDirectory + path.sep + '**' + path.sep + 'jquery.js' );
 		test.notStrictEqual( jQuery.length, 0 );
 		test.done();
 	},
+
 	metadataDirIncludesHtmlFile: function( test ) {
 		var htmlFiles = glob.sync( this.metadataDirectory + path.sep + '**' + path.sep + '*.html' );
 		test.equals( htmlFiles.length, 1 );
 		test.done();
 	},
+
 	stylesDirIncludesHtmlFile: function( test ) {
 		var htmlFiles = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + '*.html' );
 		test.equals( htmlFiles.length, 1 );
 		test.done();
 	},
+
 	headerScriptsDirIncludesHtmlFile: function( test ) {
 		var htmlFiles = glob.sync( this.headerScriptsDirectory + path.sep + '**' + path.sep + '*.html' );
 		test.equals( htmlFiles.length, 1 );
 		test.done();
 	},
+
 	stylesDirectoryIncludesCSSFiles: function( test ) {
 		var cssFiles = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + '*.css' );
 		test.notStrictEqual( cssFiles.length, 0 );
+		test.done();
+	},
+
+	htmlFilesArentEmpty: function( test ) {
+		var htmlFiles = glob.sync( this.exportDirectory + path.sep + '**' + path.sep + '*.html' );
+
+		htmlFiles.forEach( function( filePath ) {
+			var absFilePath = path.resolve( filePath );
+
+			fs.readFile( absFilePath, 'utf8', function( err, data ) {
+				var typeOfData = typeof data;
+
+				if ( typeOfData.toLowerCase() === 'string' ) {
+					test.notStrictEqual( data.length, 0 );
+				}
+			} );
+		} );
+
 		test.done();
 	}
 };

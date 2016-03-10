@@ -197,3 +197,13 @@ Take a look in the repository. I've included some sublime snippet files. Feel fr
 </div>
 <!-- END b-footer.hbs -->
 ```
+
+## Testing
+
+Within the root directory run:
+
+```shell
+npm test
+```
+
+... this will install all node modules for this task, it will install all node modules for veams and it will run all tests
