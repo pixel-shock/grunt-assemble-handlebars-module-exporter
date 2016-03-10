@@ -15,7 +15,7 @@ npm install grunt-assemble-handlebars-module-exporter --save-dev
 Currently:
 Add the follwing line to your ```package.json```
 ```json
-"grunt-assemble-handlebars-module-exporter": "git+https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter.git#v0.1.0"
+"grunt-assemble-handlebars-module-exporter": "git+https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter.git#v0.2.1"
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
