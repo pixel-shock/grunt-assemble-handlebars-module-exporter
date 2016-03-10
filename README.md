@@ -1,26 +1,34 @@
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![GitHub version](https://badge.fury.io/gh/pixel-shock%2Fgrunt-assemble-handlebars-module-exporter.svg)](https://badge.fury.io/gh/pixel-shock%2Fgrunt-assemble-handlebars-module-exporter)
+[![npm version](https://badge.fury.io/js/grunt-assemble-handlebars-module-exporter.svg)](https://badge.fury.io/js/grunt-assemble-handlebars-module-exporter)
+[![Build Status](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter.svg?branch=master)](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter)
+
 # grunt-assemble-handlebars-module-exporter
 
 > A grunt plugin that extracts modules from html markup based on regular expressions
 
-<br>
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
-[![Build Status](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter.svg?branch=master)](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter)
+## Example
 
+![Source](./flow.jpg)
+
+*Note:* If you want to take a deeper look into the example just run `npm test` and take a look into the generated folders.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
-In Future:
-```shell
+### Install latest release *recommended*
+
+```bash
 npm install grunt-assemble-handlebars-module-exporter --save-dev
 ```
 
-Currently:
+### Install bleeding edge *caution*
 Add the follwing line to your ```package.json```
+
 ```json
-"grunt-assemble-handlebars-module-exporter": "git+https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter.git#v0.2.1"
+"grunt-assemble-handlebars-module-exporter": "git+https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter.git"
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -49,7 +57,7 @@ grunt.initConfig({
 });
 ```
 
-### Options
+## Options
 
 #### options.moduleStartRegex
 **Type:** `RegEx`<br>
@@ -140,7 +148,7 @@ An Object which defines the base dependencies for each module.
 
 `byFileType` means that these files are copied if the file extensions dependencies in the module matching the base dependency.
 
-### Comments in your modules
+## Comments in your modules
 
 Take a look in the repository. I've included some sublime snippet files. Feel free to use them!
 
