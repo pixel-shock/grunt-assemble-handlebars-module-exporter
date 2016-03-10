@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.2.4 - 2016-03-10
+* **added** `.npmignore` file to exclude the unnecessary stuff
+
 ## v0.2.3 - 2016-03-10
 * **added** tests
 * **added** [veams](http://www.veams.org/) as test-base
