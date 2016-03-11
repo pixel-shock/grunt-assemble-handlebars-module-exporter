@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.2.6 - 2016-03-11
+* **removed** `findup-sync` to find modules and depending files ... now using `glob`
+
 ## v0.2.5 - 2016-03-10
 * **added** `grunt-tasks` & `Gruntfile.js` to `.npmignore`
 

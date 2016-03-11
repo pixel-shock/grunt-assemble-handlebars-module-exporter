@@ -1,6 +1,16 @@
-var _ = require( 'lodash' );
-var path = require( 'path' );
-var findup = require( 'findup-sync' );
+/*
+ * grunt-assemble-handlebars-module-exporter
+ *
+ *
+ * Copyright (c) 2016 Wehe, Tino
+ * Licensed under the MIT license.
+ */
+
+'use strict';
+
+var _			= require( 'lodash' );
+var path		= require( 'path' );
+var glob		= require( 'glob' );
 
 exports.init = function( grunt ) {
 	var exports = {};
@@ -62,20 +72,22 @@ exports.init = function( grunt ) {
 			for ( var j = 0; j < srcPaths.length; j++ ) {
 				var srcPath = options.dependingFilesBasePath + path.sep + srcPaths[ j ];
 				var filePath = null;
-				var searchPath = '';
-
 				// If the fileNames are for base dependencies, we're knowing the complete filepath
 				// already
 				if ( isBaseDependency !== true ) {
 					if ( typeof foundFilesCache[ depFile ] !== 'undefined' ) {
 						filePath = foundFilesCache[ depFile ];
 					} else {
-						searchPath = path.normalize( srcPath + path.sep );
-						filePath = findup( '**' + path.sep + depFile, {
-							nocase: true,
-							dot: false,
-							cwd: searchPath
-						} );
+						var searchPath = path.resolve( path.normalize( srcPath + path.sep ) );
+						var searchFilePath = path.normalize( searchPath +
+												path.sep +
+												'**' +
+												path.sep +
+												depFile );
+						var foundFiles = glob.sync( searchFilePath );
+						if ( foundFiles.length > 0 ) {
+							filePath = foundFiles[ 0 ];
+						}
 					}
 				} else {
 					filePath = depFile;

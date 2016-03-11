@@ -17,7 +17,6 @@ module.exports = function( grunt ) {
 	var html		= require( 'html' );
 	var minify		= require( 'html-minifier' ).minify;
 	var inspect		= require( 'util' ).inspect;
-	var findup		= require( 'findup-sync' );
 	var path		= require( 'path' );
 	var glob		= require( 'glob' );
 
@@ -136,12 +135,19 @@ module.exports = function( grunt ) {
 						filePath = moduleSrcFileCache[ module.fileName ];
 					// Otherwise try to find the module source file
 					} else {
-						var searchPath = path.normalize( options.moduleSrc + path.sep );
-						filePath = findup( '**' + path.sep + module.fileName, {
-							nocase: true,
-							dot: false,
-							cwd: searchPath
-						} );
+						var searchPath = path.resolve(
+											path.normalize( options.moduleSrc + path.sep ) );
+						var searchFilePath = path.normalize(
+												searchPath +
+												path.sep +
+												'**' +
+												path.sep +
+												module.fileName );
+						var foundFiles = glob.sync( searchFilePath );
+
+						if ( foundFiles.length > 0 ) {
+							filePath = foundFiles[ 0 ];
+						}
 					}
 					// If a module source file found, store it into the pseudo
 					// cache and normalize the path
