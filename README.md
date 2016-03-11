@@ -2,6 +2,10 @@
 [![GitHub version](https://badge.fury.io/gh/pixel-shock%2Fgrunt-assemble-handlebars-module-exporter.svg)](https://badge.fury.io/gh/pixel-shock%2Fgrunt-assemble-handlebars-module-exporter)
 [![npm version](https://badge.fury.io/js/grunt-assemble-handlebars-module-exporter.svg)](https://badge.fury.io/js/grunt-assemble-handlebars-module-exporter)
 [![Build Status](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter.svg?branch=master)](https://travis-ci.org/pixel-shock/grunt-assemble-handlebars-module-exporter)
+[![GitHub issues](https://img.shields.io/github/issues/pixel-shock/grunt-assemble-handlebars-module-exporter.svg)](https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter/issues)
+[![GitHub stars](https://img.shields.io/github/stars/pixel-shock/grunt-assemble-handlebars-module-exporter.svg)](https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/pixel-shock/grunt-assemble-handlebars-module-exporter.svg)](https://github.com/pixel-shock/grunt-assemble-handlebars-module-exporter/network)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pixel-shock/grunt-assemble-handlebars-module-exporter/master/LICENSE-MIT)
 
 # grunt-assemble-handlebars-module-exporter
 
