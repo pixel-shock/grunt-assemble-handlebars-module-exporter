@@ -8,32 +8,32 @@ exports.directoryStructure = {
 		callback();
 	},
 
-	exportDirectoryExists: function( test ) {
-		test.equals( fs.lstatSync( path.resolve( this.exportDirectory ) ).isDirectory() , true );
+	exportDirectoryShouldExist: function( test ) {
+		test.equals( fs.lstatSync( path.resolve( this.exportDirectory ) ).isDirectory() , true, 'Export directory should exist' );
 		test.done();
 	},
 
-	exportDirectoryIncludesSubfolders: function( test ) {
+	exportDirectoryShouldIncludesSubfolders: function( test ) {
 		var subFolders = glob.sync( this.exportDirectory + path.sep + '**');
-		test.notStrictEqual( subFolders.length, 0 );
+		test.notStrictEqual( subFolders.length, 0, 'Export directory should include subfolders' );
 		test.done();
 	},
 
-	metaDataDirExists: function( test ) {
+	metaDataDirectoryShouldExist: function( test ) {
 		var subFolders = glob.sync( this.exportDirectory + path.sep + '**/_metadata');
-		test.notStrictEqual( subFolders.length, 0 );
+		test.notStrictEqual( subFolders.length, 0, 'Metadata directory should exist' );
 		test.done();
 	},
 
-	stylesDirExists: function( test ) {
+	stylesDirectoryShouldExist: function( test ) {
 		var subFolders = glob.sync( this.exportDirectory + path.sep + '**/_metadata');
-		test.notStrictEqual( subFolders.length, 0 );
+		test.notStrictEqual( subFolders.length, 0, 'Styles directory should exist' );
 		test.done();
 	},
 
-	headerScriptsDirExists: function( test ) {
+	headerScriptsDirectoryShouldExist: function( test ) {
 		var subFolders = glob.sync( this.exportDirectory + path.sep + '**/header-scripts');
-		test.notStrictEqual( subFolders.length, 0 );
+		test.notStrictEqual( subFolders.length, 0, 'Header scripts directory should exist' );
 		test.done();
 	}
 };

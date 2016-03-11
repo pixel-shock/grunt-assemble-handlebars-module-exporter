@@ -14,10 +14,10 @@ exports.init = function( grunt ) {
 		moduleSrc: 'resources/templates/',
 		moduleExportExtension: '.html',
 		dependingFilesBasePath: '_output',
-		dependingFilesSrc: [
-			'js',
-			'css',
-			'img'
+		dependingFilesSearchPaths: [
+			'_output/js/**/',
+			'_output/css/**/',
+			'_output/img/**/'
 		],
 		baseDependencies: {
 			files: {

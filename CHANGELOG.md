@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.2.7 - 2016-03-11
+* **improved** performance for searching depending files
+* **removed** option `dependingFilesSrc` and replaced it with `dependingFilesSearchPaths`
+	* you can now use `glob` patterns for the search paths
+* **optimized** the tests
+
 ## v0.2.6 - 2016-03-11
 * **removed** `findup-sync` to find modules and depending files ... now using `glob`
 

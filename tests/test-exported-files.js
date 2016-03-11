@@ -2,7 +2,7 @@ var path		= require( 'path' );
 var fs			= require( 'fs' );
 var glob		= require( 'glob' );
 
-exports.directoryStructure = {
+exports.exportedFiles = {
 	setUp: function( callback ) {
 		this.exportDirectory = 'tests/fixtures/assemble-handlebars-module-exporter/partials/_global';
 		this.metadataDirectory = this.exportDirectory + path.sep + '_metadata';
@@ -11,62 +11,59 @@ exports.directoryStructure = {
 		callback();
 	},
 
-	metadataDirIncludesJQuery: function( test ) {
+	metadataDirectoryShouldIncludeJQuery: function( test ) {
 		var jQuery = glob.sync( this.metadataDirectory + path.sep + '**' + path.sep + 'jquery.js' );
-		test.notStrictEqual( jQuery.length, 0 );
+		test.notStrictEqual( jQuery.length, 0, 'Metadata directory should contain "jquery.js" file' );
 		test.done();
 	},
 
-	stylesDirIncludesJQuery: function( test ) {
+	stylesDirectoryShouldIncludeJQuery: function( test ) {
 		var jQuery = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + 'jquery.js' );
-		test.notStrictEqual( jQuery.length, 0 );
+		test.notStrictEqual( jQuery.length, 0, 'Styles directory should contain "jquery.js" file' );
 		test.done();
 	},
 
-	headerScriptsDirIncludesJQuery: function( test ) {
+	headerScriptsDirectoryShouldIncludeJQuery: function( test ) {
 		var jQuery = glob.sync( this.headerScriptsDirectory + path.sep + '**' + path.sep + 'jquery.js' );
-		test.notStrictEqual( jQuery.length, 0 );
+		test.notStrictEqual( jQuery.length, 0, 'Header scripts directory should contain "jquery.js" file' );
 		test.done();
 	},
 
-	metadataDirIncludesHtmlFile: function( test ) {
-		var htmlFiles = glob.sync( this.metadataDirectory + path.sep + '**' + path.sep + '*.html' );
-		test.equals( htmlFiles.length, 1 );
+	metadataDirectoryShouldIncludeHtmlFile: function( test ) {
+		var htmlFiles = glob.sync( this.metadataDirectory + path.sep + '**' + path.sep + '_metadata.html' );
+		test.equals( htmlFiles.length, 1, 'Metadata directory should contain "_metadata.html" file' );
 		test.done();
 	},
 
-	stylesDirIncludesHtmlFile: function( test ) {
-		var htmlFiles = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + '*.html' );
-		test.equals( htmlFiles.length, 1 );
+	stylesDirectoryShouldIncludeHtmlFile: function( test ) {
+		var htmlFiles = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + '_styles.html' );
+		test.equals( htmlFiles.length, 1, 'Styles directory should contain "_styles.html" file' );
 		test.done();
 	},
 
-	headerScriptsDirIncludesHtmlFile: function( test ) {
-		var htmlFiles = glob.sync( this.headerScriptsDirectory + path.sep + '**' + path.sep + '*.html' );
-		test.equals( htmlFiles.length, 1 );
+	headerScriptsDirectoryShouldIncludeHtmlFile: function( test ) {
+		var htmlFiles = glob.sync( this.headerScriptsDirectory + path.sep + '**' + path.sep + 'header-scripts.html' );
+		test.equals( htmlFiles.length, 1, 'Header scripts directory should contain "header-scripts.html" file' );
 		test.done();
 	},
 
-	stylesDirectoryIncludesCSSFiles: function( test ) {
+	stylesDirectoryShouldIncludeCSSFiles: function( test ) {
 		var cssFiles = glob.sync( this.stylesDirectory + path.sep + '**' + path.sep + '*.css' );
-		test.notStrictEqual( cssFiles.length, 0 );
+		test.notStrictEqual( cssFiles.length, 0, 'Styles directory should contain some CSS files' );
 		test.done();
 	},
 
-	htmlFilesArentEmpty: function( test ) {
+	htmlFilesShouldntBeEmpty: function( test ) {
 		var htmlFiles = glob.sync( this.exportDirectory + path.sep + '**' + path.sep + '*.html' );
 
-		htmlFiles.forEach( function( filePath ) {
-			var absFilePath = path.resolve( filePath );
+		test.notStrictEqual( htmlFiles.length, 0, 'HTML files length found in export directory should be greater than 0' );
 
-			fs.readFile( absFilePath, 'utf8', function( err, data ) {
-				var typeOfData = typeof data;
-
-				if ( typeOfData.toLowerCase() === 'string' ) {
-					test.notStrictEqual( data.length, 0 );
-				}
-			} );
-		} );
+		for (var i = 0; i < htmlFiles.length; i++) {
+			var fileContents = fs.readFileSync( path.resolve( htmlFiles[ i ] ), 'utf8');
+			var typeOfFileContents = (typeof fileContents).toLowerCase();
+			test.strictEqual( typeOfFileContents, 'string', 'File content of "' +  path.basename( htmlFiles[ i ] )  + '" should be a string' );
+			test.notStrictEqual( fileContents.length, 0, 'File content of "' +  path.basename( htmlFiles[ i ] )  + '" length should be greater than 0' );
+		}
 
 		test.done();
 	}

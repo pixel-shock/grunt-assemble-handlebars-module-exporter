@@ -11,6 +11,7 @@
 var _			= require( 'lodash' );
 var path		= require( 'path' );
 var glob		= require( 'glob' );
+var fs			= require( 'fs' );
 
 exports.init = function( grunt ) {
 	var exports = {};
@@ -59,58 +60,65 @@ exports.init = function( grunt ) {
 	 * @param  {String} destination The path for the output ( targetPath for the copied files )
 	 * @param {Object} options The task options
 	 */
-	exports.findAndCopyDependingFiles = function( fileNames, destination, options, isBaseDependency ) { // jscs:ignore maximumLineLength
+	exports.findAndCopyDependingFiles = function( fileNames, destination, options, isBaseDependency, distDir ) { // jscs:ignore maximumLineLength
 		for ( var i = 0; i < fileNames.length; i++ ) {
 			var depFile = fileNames[ i ];
 			var depFileFound = false;
-			var srcPaths = options.dependingFilesSrc;
-			// This is useful ... when this task takes too much time, mostly
-			// the depending file doesn't exist or spelled wrong.
-			// Run in verbose mode to see the file which should be found.
-			grunt.verbose.writeln( '\tSearching for: ' + depFile );
-			// Search in every srcPath for the depending files
-			for ( var j = 0; j < srcPaths.length; j++ ) {
-				var srcPath = options.dependingFilesBasePath + path.sep + srcPaths[ j ];
-				var filePath = null;
-				// If the fileNames are for base dependencies, we're knowing the complete filepath
-				// already
-				if ( isBaseDependency !== true ) {
+			var filePath = null;
+			var depSourcePaths = options.dependingFilesSearchPaths;
+			// Search for depending files
+			if ( isBaseDependency !== true ) {
+				for ( var j = 0; j < depSourcePaths.length; j++ ) {
+					depFileFound = false;
 					if ( typeof foundFilesCache[ depFile ] !== 'undefined' ) {
+						depFileFound = true;
 						filePath = foundFilesCache[ depFile ];
+						break;
 					} else {
-						var searchPath = path.resolve( path.normalize( srcPath + path.sep ) );
-						var searchFilePath = path.normalize( searchPath +
-												path.sep +
-												'**' +
-												path.sep +
-												depFile );
-						var foundFiles = glob.sync( searchFilePath );
+						var sourcePath = depSourcePaths[ j ];
+						var searchPath = path.resolve( path.normalize( depSourcePaths[ j ] ) );
+						var fileSearchPath = path.normalize( searchPath + path.sep + depFile );
+						var foundFiles = glob.sync( fileSearchPath );
+
 						if ( foundFiles.length > 0 ) {
-							filePath = foundFiles[ 0 ];
+							depFileFound = true;
+							filePath = path.normalize( foundFiles[ 0 ] );
+							foundFilesCache[ depFile ] = filePath;
+							break;
 						}
 					}
-				} else {
-					filePath = depFile;
 				}
+			} else {
+				filePath = path.normalize( depFile );
 
-				if ( filePath !== null ) {
+				if ( fs.lstatSync( filePath ).isFile() ) {
 					depFileFound = true;
-					foundFilesCache[ depFile ] = filePath;
-					// Build a path which exludes all paths parents
-					// starting at the dependingFilesBasePath
-					var relDepFilePath = path.relative( options.dependingFilesBasePath, filePath );
-					var exportPath = path.normalize( destination + path.sep + relDepFilePath );
-					grunt.file.copy( filePath, exportPath );
+				} else {
+					filePath = null;
 				}
 			}
-
-			if ( depFileFound === false ) {
+			// If a file found build the export path and copy the depending file to it
+			if ( filePath !== null && depFileFound === true ) {
+				var relDepFilePath = path.relative( options.dependingFilesBasePath, filePath )
+											.replace( /\.+?\//gi, '' );
+				var exportPath = path.normalize( destination + path.sep + relDepFilePath );
+				grunt.file.copy( filePath, exportPath );
+			} else {
 				grunt.log.writeln(
 					( '\n\t\tCould not find depending file: ' ).red  +
 					( '"' + depFile + '"\n' ).cyan
 				);
 			}
 		}
+	};
+
+	/**
+	 * Copy a file
+	 * @param  {String} fileSrc  The file source
+	 * @param  {String} fileDest The destination
+	 */
+	exports.copyFile = function( fileSrc, fileDest ) {
+		grunt.file.copy( fileSrc, fileDest );
 	};
 
 	/**

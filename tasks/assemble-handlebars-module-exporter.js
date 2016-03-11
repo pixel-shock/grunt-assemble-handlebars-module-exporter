@@ -57,7 +57,7 @@ module.exports = function( grunt ) {
 			grunt.log.writeln( 'Processing ' + foundFilesLen + ' file(s) ...' );
 			// Iterate through all src files
 			task.src.forEach( function( file, index ) {
-				grunt.log.writeln( '\t' + file.yellow );
+				grunt.log.writeln( '\t' + file.cyan );
 				/**
 				 * The file content of the src file
 				 * @type {String}
@@ -230,14 +230,16 @@ module.exports = function( grunt ) {
 							Helper.findAndCopyDependingFiles( module.dependingFiles,
 																filePath,
 																options,
-																false );
+																false,
+																task.dist );
 						}
 						// Copy base dependencies
 						if ( module.baseDependencies.length > 0 ) {
 							Helper.findAndCopyDependingFiles( module.baseDependencies,
 																filePath,
 																options,
-																true );
+																true,
+																task.dist );
 						}
 					}
 				} );

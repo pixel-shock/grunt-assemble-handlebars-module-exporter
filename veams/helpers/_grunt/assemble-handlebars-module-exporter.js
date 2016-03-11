@@ -9,10 +9,10 @@ module.exports = {
 			moduleSrc: 'resources/templating/',
 			moduleExportExtension: '.html',
 			dependingFilesBasePath: '<%= paths.dev %>',
-			dependingFilesSrc: [
-				'js',
-				'css',
-				'img'
+			dependingFilesSearchPaths: [
+				'<%= paths.dev %>/js/**/',
+				'<%= paths.dev %>/css/**/',
+				'<%= paths.dev %>/img/**/'
 			],
 			baseDependencies: {
 				files: {
