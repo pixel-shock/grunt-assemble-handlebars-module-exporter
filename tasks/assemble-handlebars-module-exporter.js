@@ -152,10 +152,10 @@ module.exports = function( grunt ) {
 					// If a module source file found, store it into the pseudo
 					// cache and normalize the path
 					if ( filePath !== null ) {
-						moduleSrcFileCache[ module.fileName ] = filePath;
-						module.filePath = filePath
-											.replace( options.moduleSrc, '' )
-											.replace( oldCwd, '' )
+						moduleSrcFileCache[ module.fileName ] = path.normalize( filePath );
+						module.filePath = path.normalize( filePath )
+											.replace( path.normalize( options.moduleSrc ), '' )
+											.replace( path.normalize( oldCwd ), '' )
 											.replace( module.fileName, '' )
 										;
 					// Otherwise delete the array value

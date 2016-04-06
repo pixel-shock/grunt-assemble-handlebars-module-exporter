@@ -20,6 +20,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask( 'test', [
 		'jscs:exporter',
+		'clean:test-directory',
 		'grunt:veams-build',
 		'grunt:veams-export',
 		'nodeunit:veams-export'

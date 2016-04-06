@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.2.8 - 2016-04-06
+* **fixed** Slash / Backslash problem between unix/win systems
+* *added** grunt-contrib-clean to cleanup the `tests/fixtures` directory
+
 ## v0.2.7 - 2016-03-11
 * **improved** performance for searching depending files
 * **removed** option `dependingFilesSrc` and replaced it with `dependingFilesSearchPaths`
